@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>My Wishlist</title>
+<title>MY WISHLIST</title>
 
 <style>
 * {
@@ -13,133 +13,287 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
-               "Noto Sans KR", sans-serif;
-  background: #f8f6f1;
-  color: #333;
+  background: #f7f7f5;
+  color: #222;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Apple SD Gothic Neo",
+    "Noto Sans KR",
+    sans-serif;
 }
 
 header {
-  padding: 45px 20px 25px;
-  text-align: center;
+  max-width: 900px;
+  margin: auto;
+  padding: 42px 22px 25px;
 }
 
-header h1 {
-  margin: 0;
+.logo {
   font-size: 34px;
-  letter-spacing: -1px;
+  font-weight: 800;
+  letter-spacing: -1.5px;
 }
 
-header p {
+.subtitle {
+  margin-top: 8px;
   color: #888;
+  font-size: 15px;
+}
+
+/* 돈 카드 */
+
+.money-card {
+  max-width: 900px;
+  margin: 0 auto 28px;
+  padding: 27px;
+  background: white;
+  border-radius: 25px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+}
+
+.money-title {
+  color: #777;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.money {
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.progress-background {
+  width: 100%;
+  height: 12px;
+  background: #ededed;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  width: 0%;
+  background: #a6b892;
+  border-radius: 20px;
+  transition: 0.3s;
+}
+
+.goal-row {
+  display: flex;
+  justify-content: space-between;
   margin-top: 10px;
+  color: #999;
+  font-size: 13px;
+}
+
+/* 돈 입력 */
+
+.money-settings {
+  margin-top: 18px;
+  display: flex;
+  gap: 8px;
+}
+
+.money-settings input {
+  flex: 1;
+  min-width: 0;
+  padding: 11px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+.money-settings button {
+  border: none;
+  background: #222;
+  color: white;
+  padding: 0 17px;
+  border-radius: 12px;
+}
+
+/* 카테고리 */
+
+.section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 22px;
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 750;
+  margin: 25px 0 15px;
 }
 
 .categories {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding: 10px 18px 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
 }
 
 .category {
   border: none;
   background: white;
-  padding: 10px 16px;
-  border-radius: 20px;
-  white-space: nowrap;
+  border-radius: 22px;
+  min-height: 125px;
+  box-shadow: 0 4px 17px rgba(0,0,0,0.05);
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.category:active {
+  transform: scale(0.97);
+}
+
+.category .emoji {
+  display: block;
+  font-size: 34px;
+  margin-bottom: 10px;
+}
+
+.category .name {
+  color: #3578e5;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* 목록 화면 */
+
+#categoryView {
+  display: none;
+}
+
+.back {
+  border: none;
+  background: white;
+  padding: 10px 15px;
+  border-radius: 12px;
   font-size: 14px;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.category.active {
-  background: #9caf88;
-  color: white;
-}
-
-main {
-  max-width: 850px;
-  margin: auto;
-  padding: 0 18px 100px;
+  margin-bottom: 15px;
 }
 
 .add-box {
   background: white;
-  border-radius: 20px;
-  padding: 18px;
-  margin-bottom: 25px;
-  box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+  border-radius: 22px;
+  padding: 20px;
+  box-shadow: 0 4px 17px rgba(0,0,0,0.05);
+  margin-bottom: 18px;
 }
 
 .add-box input,
 .add-box select {
   width: 100%;
   padding: 13px;
-  margin-bottom: 10px;
+  margin-bottom: 9px;
   border: 1px solid #ddd;
   border-radius: 12px;
   font-size: 14px;
+  background: white;
 }
 
 .add-box button {
   width: 100%;
-  border: none;
   padding: 13px;
+  border: none;
   border-radius: 12px;
-  background: #9caf88;
+  background: #a6b892;
   color: white;
   font-size: 15px;
-  cursor: pointer;
+  font-weight: 600;
 }
 
-#list {
+/* 아이템 */
+
+.items {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
 }
 
 .item {
   background: white;
-  border-radius: 18px;
-  padding: 17px;
-  box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 0 4px 17px rgba(0,0,0,0.05);
 }
 
 .item h3 {
   margin: 0 0 8px;
-  font-size: 18px;
+  font-size: 17px;
 }
 
-.item .category-name {
-  display: inline-block;
-  background: #f0f2eb;
-  color: #728064;
-  padding: 4px 9px;
-  border-radius: 10px;
-  font-size: 12px;
+.price {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 7px;
 }
 
-.item .memo {
-  color: #777;
+.memo {
+  color: #888;
   font-size: 13px;
-  margin-top: 10px;
+  line-height: 1.5;
+}
+
+.item-buttons {
+  display: flex;
+  gap: 7px;
+  margin-top: 13px;
+}
+
+.item-buttons button {
+  flex: 1;
+  border: none;
+  padding: 8px;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+.buy {
+  background: #edf3e8;
+  color: #657555;
 }
 
 .delete {
-  border: none;
   background: #f5eeee;
   color: #a66;
-  padding: 7px 10px;
-  border-radius: 9px;
-  margin-top: 12px;
-  cursor: pointer;
 }
 
 .empty {
   text-align: center;
+  padding: 45px 10px;
   color: #aaa;
-  padding: 40px 10px;
+}
+
+/* 모바일 */
+
+@media (max-width: 600px) {
+
+  header {
+    padding-top: 32px;
+  }
+
+  .logo {
+    font-size: 30px;
+  }
+
+  .categories {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .items {
+    grid-template-columns: 1fr;
+  }
+
+  .money-settings {
+    flex-direction: column;
+  }
+
+  .money-settings button {
+    padding: 12px;
+  }
 }
 </style>
 </head>
@@ -147,58 +301,235 @@ main {
 <body>
 
 <header>
-  <h1>My Wishlist</h1>
-  <p>내가 좋아하는 것들을 모아두는 곳</p>
+  <div class="logo">MY WISHLIST</div>
+  <div class="subtitle">사고 싶은 것들을 모아두는 곳 🛒</div>
 </header>
 
-<div class="categories">
-  <button class="category active" onclick="filterItems('전체', this)">전체</button>
-  <button class="category" onclick="filterItems('애니메이션', this)">애니메이션</button>
-  <button class="category" onclick="filterItems('아이돌', this)">아이돌</button>
-  <button class="category" onclick="filterItems('책', this)">책</button>
-  <button class="category" onclick="filterItems('신발', this)">신발</button>
-  <button class="category" onclick="filterItems('옷', this)">옷</button>
-  <button class="category" onclick="filterItems('장난감', this)">장난감</button>
-</div>
+<!-- 돈 카드 -->
 
-<main>
+<div class="money-card">
 
-  <div class="add-box">
-    <input id="itemName" type="text" placeholder="사고 싶은 물건 이름">
+  <div class="money-title">💰 현재 모은 돈</div>
 
-    <select id="itemCategory">
-      <option>애니메이션</option>
-      <option>아이돌</option>
-      <option>책</option>
-      <option>신발</option>
-      <option>옷</option>
-      <option>장난감</option>
-    </select>
-
-    <input id="itemMemo" type="text" placeholder="메모 (선택사항)">
-
-    <button onclick="addItem()">＋ 위시리스트에 추가</button>
+  <div class="money">
+    ₩<span id="savedMoney">0</span>
   </div>
 
-  <div id="list"></div>
+  <div class="progress-background">
+    <div class="progress" id="progress"></div>
+  </div>
 
-</main>
+  <div class="goal-row">
+    <span>목표 금액</span>
+    <span>₩<span id="goalMoney">100000</span></span>
+  </div>
+
+  <div class="money-settings">
+    <input
+      id="moneyInput"
+      type="number"
+      placeholder="현재 모은 돈"
+    >
+
+    <input
+      id="goalInput"
+      type="number"
+      placeholder="목표 금액"
+    >
+
+    <button onclick="saveMoney()">저장</button>
+  </div>
+
+</div>
+
+<!-- 홈 -->
+
+<div id="home">
+
+  <div class="section">
+
+    <div class="section-title">카테고리</div>
+
+    <div class="categories">
+
+      <button class="category" onclick="openCategory('애니메이션')">
+        <span class="emoji">🎬</span>
+        <span class="name">애니메이션</span>
+      </button>
+
+      <button class="category" onclick="openCategory('아이돌')">
+        <span class="emoji">🎤</span>
+        <span class="name">아이돌</span>
+      </button>
+
+      <button class="category" onclick="openCategory('책')">
+        <span class="emoji">📚</span>
+        <span class="name">책</span>
+      </button>
+
+      <button class="category" onclick="openCategory('신발')">
+        <span class="emoji">👟</span>
+        <span class="name">신발</span>
+      </button>
+
+      <button class="category" onclick="openCategory('옷')">
+        <span class="emoji">👕</span>
+        <span class="name">옷</span>
+      </button>
+
+      <button class="category" onclick="openCategory('장난감')">
+        <span class="emoji">🧸</span>
+        <span class="name">장난감</span>
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- 카테고리 내부 -->
+
+<div id="categoryView">
+
+  <div class="section">
+
+    <button class="back" onclick="goHome()">← 카테고리로</button>
+
+    <div class="section-title" id="categoryTitle"></div>
+
+    <div class="add-box">
+
+      <input
+        id="itemName"
+        type="text"
+        placeholder="사고 싶은 물건 이름"
+      >
+
+      <input
+        id="itemPrice"
+        type="number"
+        placeholder="가격"
+      >
+
+      <input
+        id="itemMemo"
+        type="text"
+        placeholder="메모"
+      >
+
+      <button onclick="addItem()">
+        ＋ 위시리스트에 추가
+      </button>
+
+    </div>
+
+    <div class="items" id="items"></div>
+
+  </div>
+
+</div>
+
 
 <script>
 
-let items = JSON.parse(localStorage.getItem("myWishlist")) || [];
+let items = JSON.parse(localStorage.getItem("wishlistItems")) || [];
 
-let currentCategory = "전체";
+let savedMoney =
+  Number(localStorage.getItem("savedMoney")) || 0;
 
-function saveItems() {
-  localStorage.setItem("myWishlist", JSON.stringify(items));
+let goalMoney =
+  Number(localStorage.getItem("goalMoney")) || 100000;
+
+let currentCategory = "";
+
+
+/* 돈 */
+
+function updateMoney() {
+
+  document.getElementById("savedMoney").textContent =
+    savedMoney.toLocaleString();
+
+  document.getElementById("goalMoney").textContent =
+    goalMoney.toLocaleString();
+
+  let percent = 0;
+
+  if (goalMoney > 0) {
+    percent = Math.min(
+      (savedMoney / goalMoney) * 100,
+      100
+    );
+  }
+
+  document.getElementById("progress").style.width =
+    percent + "%";
 }
+
+
+function saveMoney() {
+
+  const money =
+    Number(document.getElementById("moneyInput").value);
+
+  const goal =
+    Number(document.getElementById("goalInput").value);
+
+  if (!isNaN(money)) {
+    savedMoney = money;
+  }
+
+  if (!isNaN(goal) && goal > 0) {
+    goalMoney = goal;
+  }
+
+  localStorage.setItem("savedMoney", savedMoney);
+  localStorage.setItem("goalMoney", goalMoney);
+
+  document.getElementById("moneyInput").value = "";
+  document.getElementById("goalInput").value = "";
+
+  updateMoney();
+}
+
+
+/* 카테고리 */
+
+function openCategory(category) {
+
+  currentCategory = category;
+
+  document.getElementById("home").style.display = "none";
+  document.getElementById("categoryView").style.display = "block";
+
+  document.getElementById("categoryTitle").textContent =
+    category;
+
+  renderItems();
+}
+
+
+function goHome() {
+
+  document.getElementById("categoryView").style.display = "none";
+  document.getElementById("home").style.display = "block";
+}
+
+
+/* 아이템 추가 */
 
 function addItem() {
 
-  const name = document.getElementById("itemName").value.trim();
-  const category = document.getElementById("itemCategory").value;
-  const memo = document.getElementById("itemMemo").value.trim();
+  const name =
+    document.getElementById("itemName").value.trim();
+
+  const price =
+    Number(document.getElementById("itemPrice").value) || 0;
+
+  const memo =
+    document.getElementById("itemMemo").value.trim();
 
   if (!name) {
     alert("물건 이름을 입력해줘!");
@@ -206,68 +537,64 @@ function addItem() {
   }
 
   items.push({
+
     id: Date.now(),
+
     name: name,
-    category: category,
-    memo: memo
+
+    price: price,
+
+    memo: memo,
+
+    category: currentCategory
+
   });
 
-  saveItems();
+  localStorage.setItem(
+    "wishlistItems",
+    JSON.stringify(items)
+  );
 
   document.getElementById("itemName").value = "";
+  document.getElementById("itemPrice").value = "";
   document.getElementById("itemMemo").value = "";
 
   renderItems();
 }
 
-function deleteItem(id) {
 
-  items = items.filter(item => item.id !== id);
-
-  saveItems();
-  renderItems();
-}
-
-function filterItems(category, button) {
-
-  currentCategory = category;
-
-  document.querySelectorAll(".category").forEach(btn => {
-    btn.classList.remove("active");
-  });
-
-  button.classList.add("active");
-
-  renderItems();
-}
+/* 아이템 표시 */
 
 function renderItems() {
 
-  const list = document.getElementById("list");
+  const box =
+    document.getElementById("items");
 
-  let filtered = items;
-
-  if (currentCategory !== "전체") {
-    filtered = items.filter(item => item.category === currentCategory);
-  }
+  const filtered =
+    items.filter(
+      item => item.category === currentCategory
+    );
 
   if (filtered.length === 0) {
-    list.innerHTML = `
+
+    box.innerHTML = `
       <div class="empty">
-        아직 등록한 항목이 없어!
+        아직 등록한 물건이 없어!
       </div>
     `;
+
     return;
   }
 
-  list.innerHTML = filtered.map(item => `
+  box.innerHTML = filtered.map(item => `
+
     <div class="item">
 
       <h3>${escapeHTML(item.name)}</h3>
 
-      <span class="category-name">
-        ${escapeHTML(item.category)}
-      </span>
+      <div class="price">
+        ₩${item.price.toLocaleString()}
+      </div>
 
       ${
         item.memo
@@ -275,13 +602,65 @@ function renderItems() {
         : ""
       }
 
-      <button class="delete" onclick="deleteItem(${item.id})">
-        삭제
-      </button>
+      <div class="item-buttons">
+
+        <button
+          class="buy"
+          onclick="markBought(${item.id})">
+          ✓ 구매함
+        </button>
+
+        <button
+          class="delete"
+          onclick="deleteItem(${item.id})">
+          삭제
+        </button>
+
+      </div>
 
     </div>
+
   `).join("");
 }
+
+
+/* 구매 완료 */
+
+function markBought(id) {
+
+  const item =
+    items.find(item => item.id === id);
+
+  if (!item) return;
+
+  item.bought = true;
+
+  localStorage.setItem(
+    "wishlistItems",
+    JSON.stringify(items)
+  );
+
+  renderItems();
+}
+
+
+/* 삭제 */
+
+function deleteItem(id) {
+
+  items =
+    items.filter(item => item.id !== id);
+
+  localStorage.setItem(
+    "wishlistItems",
+    JSON.stringify(items)
+  );
+
+  renderItems();
+}
+
+
+/* HTML 안전 처리 */
 
 function escapeHTML(text) {
 
@@ -293,7 +672,8 @@ function escapeHTML(text) {
     .replaceAll("'", "&#039;");
 }
 
-renderItems();
+
+updateMoney();
 
 </script>
 
