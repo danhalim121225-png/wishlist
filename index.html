@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Wishlist</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+               "Noto Sans KR", sans-serif;
+  background: #f8f6f1;
+  color: #333;
+}
+
+header {
+  padding: 45px 20px 25px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 34px;
+  letter-spacing: -1px;
+}
+
+header p {
+  color: #888;
+  margin-top: 10px;
+}
+
+.categories {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 10px 18px 20px;
+}
+
+.category {
+  border: none;
+  background: white;
+  padding: 10px 16px;
+  border-radius: 20px;
+  white-space: nowrap;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.category.active {
+  background: #9caf88;
+  color: white;
+}
+
+main {
+  max-width: 850px;
+  margin: auto;
+  padding: 0 18px 100px;
+}
+
+.add-box {
+  background: white;
+  border-radius: 20px;
+  padding: 18px;
+  margin-bottom: 25px;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+}
+
+.add-box input,
+.add-box select {
+  width: 100%;
+  padding: 13px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+.add-box button {
+  width: 100%;
+  border: none;
+  padding: 13px;
+  border-radius: 12px;
+  background: #9caf88;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+#list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 15px;
+}
+
+.item {
+  background: white;
+  border-radius: 18px;
+  padding: 17px;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+}
+
+.item h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.item .category-name {
+  display: inline-block;
+  background: #f0f2eb;
+  color: #728064;
+  padding: 4px 9px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.item .memo {
+  color: #777;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.delete {
+  border: none;
+  background: #f5eeee;
+  color: #a66;
+  padding: 7px 10px;
+  border-radius: 9px;
+  margin-top: 12px;
+  cursor: pointer;
+}
+
+.empty {
+  text-align: center;
+  color: #aaa;
+  padding: 40px 10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>My Wishlist</h1>
+  <p>내가 좋아하는 것들을 모아두는 곳</p>
+</header>
+
+<div class="categories">
+  <button class="category active" onclick="filterItems('전체', this)">전체</button>
+  <button class="category" onclick="filterItems('애니메이션', this)">애니메이션</button>
+  <button class="category" onclick="filterItems('아이돌', this)">아이돌</button>
+  <button class="category" onclick="filterItems('책', this)">책</button>
+  <button class="category" onclick="filterItems('신발', this)">신발</button>
+  <button class="category" onclick="filterItems('옷', this)">옷</button>
+  <button class="category" onclick="filterItems('장난감', this)">장난감</button>
+</div>
+
+<main>
+
+  <div class="add-box">
+    <input id="itemName" type="text" placeholder="사고 싶은 물건 이름">
+
+    <select id="itemCategory">
+      <option>애니메이션</option>
+      <option>아이돌</option>
+      <option>책</option>
+      <option>신발</option>
+      <option>옷</option>
+      <option>장난감</option>
+    </select>
+
+    <input id="itemMemo" type="text" placeholder="메모 (선택사항)">
+
+    <button onclick="addItem()">＋ 위시리스트에 추가</button>
+  </div>
+
+  <div id="list"></div>
+
+</main>
+
+<script>
+
+let items = JSON.parse(localStorage.getItem("myWishlist")) || [];
+
+let currentCategory = "전체";
+
+function saveItems() {
+  localStorage.setItem("myWishlist", JSON.stringify(items));
+}
+
+function addItem() {
+
+  const name = document.getElementById("itemName").value.trim();
+  const category = document.getElementById("itemCategory").value;
+  const memo = document.getElementById("itemMemo").value.trim();
+
+  if (!name) {
+    alert("물건 이름을 입력해줘!");
+    return;
+  }
+
+  items.push({
+    id: Date.now(),
+    name: name,
+    category: category,
+    memo: memo
+  });
+
+  saveItems();
+
+  document.getElementById("itemName").value = "";
+  document.getElementById("itemMemo").value = "";
+
+  renderItems();
+}
+
+function deleteItem(id) {
+
+  items = items.filter(item => item.id !== id);
+
+  saveItems();
+  renderItems();
+}
+
+function filterItems(category, button) {
+
+  currentCategory = category;
+
+  document.querySelectorAll(".category").forEach(btn => {
+    btn.classList.remove("active");
+  });
+
+  button.classList.add("active");
+
+  renderItems();
+}
+
+function renderItems() {
+
+  const list = document.getElementById("list");
+
+  let filtered = items;
+
+  if (currentCategory !== "전체") {
+    filtered = items.filter(item => item.category === currentCategory);
+  }
+
+  if (filtered.length === 0) {
+    list.innerHTML = `
+      <div class="empty">
+        아직 등록한 항목이 없어!
+      </div>
+    `;
+    return;
+  }
+
+  list.innerHTML = filtered.map(item => `
+    <div class="item">
+
+      <h3>${escapeHTML(item.name)}</h3>
+
+      <span class="category-name">
+        ${escapeHTML(item.category)}
+      </span>
+
+      ${
+        item.memo
+        ? `<div class="memo">${escapeHTML(item.memo)}</div>`
+        : ""
+      }
+
+      <button class="delete" onclick="deleteItem(${item.id})">
+        삭제
+      </button>
+
+    </div>
+  `).join("");
+}
+
+function escapeHTML(text) {
+
+  return text
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+renderItems();
+
+</script>
+
+</body>
+</html>
